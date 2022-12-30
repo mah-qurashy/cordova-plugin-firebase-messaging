@@ -97,6 +97,9 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setGroup(notification.getTag())
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor)
+                .setLargeIcon(notification.getImageUrl())
+                .setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(notification.getBody()))
                 // must set priority to make sure forceShow works properly
                 .setPriority(1);
 
