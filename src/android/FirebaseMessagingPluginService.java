@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.media.RingtoneManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import java.net.URL;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
@@ -93,8 +92,7 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
 
     private void showAlert(RemoteMessage.Notification notification) {
         
-        URL url = new URL(notification.getImageUrl());
-        Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        Bitmap image = BitmapFactory.decodeStream(notification.getImageUrl().openConnection().getInputStream());
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
                 .setSound(getNotificationSound(notification.getSound()))
                 .setContentTitle(notification.getTitle())
