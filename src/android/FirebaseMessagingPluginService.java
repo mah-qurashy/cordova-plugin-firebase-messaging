@@ -7,11 +7,14 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.media.RingtoneManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+
+import java.net.URL;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -92,7 +95,8 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
 
     private void showAlert(RemoteMessage.Notification notification) {
         
-        Bitmap image = BitmapFactory.decodeStream(notification.getImageUrl().openConnection().getInputStream());
+        URL url_value = new URL(name);
+        Bitmap icon_bitmap = BitmapFactory.decodeStream(url_value.openConnection().getInputStream());
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getNotificationChannel(notification))
                 .setSound(getNotificationSound(notification.getSound()))
                 .setContentTitle(notification.getTitle())
@@ -100,7 +104,7 @@ public class FirebaseMessagingPluginService extends FirebaseMessagingService {
                 .setGroup(notification.getTag())
                 .setSmallIcon(defaultNotificationIcon)
                 .setColor(defaultNotificationColor)
-                .setLargeIcon(image)
+                .setLargeIcon(icon_bitmap)
                 .setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(notification.getBody()))
                 // must set priority to make sure forceShow works properly
